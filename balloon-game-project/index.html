@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🎈 Balloon Pop - Hyper Casual Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Start Screen with Background Game -->
+    <div id="startScreen">
+        <canvas id="backgroundGame"></canvas>
+        <div id="startContent">
+            <h1>🎈 Balloon Pop! 🎈</h1>
+            
+            <button class="menu-button" id="startBtn">▶ PLAY</button>
+            <button class="menu-button secondary" id="shopBtn">🛒 SHOP</button>
+            <button class="menu-button secondary" id="menuOptionsBtn">⚙️ OPTIONS</button>
+            
+            <div class="menu-bottom-buttons">
+                <button class="icon-menu-btn" id="menuAchievements" title="Achievements">⭐</button>
+                <button class="icon-menu-btn" id="menuSettings" title="Settings">⚙️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Canvas -->
+    <canvas id="gameCanvas"></canvas>
+    
+    <!-- UI Overlay -->
+    <div id="ui">
+        <div class="left-stats">
+            <div class="stat">🎈 Score: <span id="score">0</span></div>
+            <div class="stat">❤️ Lives: <span id="lives">3</span></div>
+        </div>
+        <div class="right-controls">
+            <div class="icon-btn" id="pauseBtn" title="Pause">⏸️</div>
+            <div class="icon-btn" id="settingsBtn" title="Settings">⚙️</div>
+        </div>
+    </div>
+
+    <!-- Pause Screen -->
+    <div id="pauseScreen">
+        <div id="pauseContent">
+            <h2>⏸️ Paused</h2>
+            <button class="pause-btn" id="resumeBtn">▶️ Resume</button>
+            <button class="pause-btn" id="quitBtn" style="background: linear-gradient(135deg, #FA742B 0%, #FF6B9D 100%);">🏠 Main Menu</button>
+        </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameOver">
+        <h2>🎮 Game Over! 🎮</h2>
+        <div class="score-box">
+            <p class="score-label">Your Score</p>
+            <p style="font-size: 48px; color: #FFD93D; font-weight: 700; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);"><span id="finalScore">0</span> 🎈</p>
+        </div>
+        <div class="score-box">
+            <p class="score-label">🏆 Best Score 🏆</p>
+            <p style="font-size: 36px; color: #FF6B9D; font-weight: 700; margin: 10px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);"><span id="highScore">0</span></p>
+        </div>
+        <button id="restartBtn">🎯 Play Again!</button>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal">
+        <div id="settingsContent">
+            <h2>⚙️ Settings</h2>
+            
+            <div class="setting-item">
+                <label>🎵 Music</label>
+                <div class="toggle-switch active" id="musicToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <label>🔊 Sound FX</label>
+                <div class="toggle-switch active" id="sfxToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="volume-control">
+                    <label>🎚️ Volume</label>
+                    <input type="range" min="0" max="100" value="50" class="volume-slider" id="volumeSlider">
+                    <span style="color: white; font-weight: 600; min-width: 40px;" id="volumeValue">50%</span>
+                </div>
+            </div>
+
+            <button class="close-btn" id="closeSettings">Close</button>
+        </div>
+    </div>
+
+    <!-- Shop Modal -->
+    <div id="shopModal">
+        <div id="shopContent">
+            <h2>🛒 Shop</h2>
+            
+            <div class="coins-display">
+                🪙 Coins: <span id="coinAmount">0</span>
+            </div>
+
+            <div class="shop-items">
+                <div class="shop-item" data-item="doublePoints">
+                    <div class="shop-item-info">
+                        <div class="shop-item-name">✨ Double Points</div>
+                        <div class="shop-item-desc">Get 2x points per balloon!</div>
+                        <div class="shop-item-owned" style="display: none;">✓ Owned</div>
+                    </div>
+                    <button class="shop-buy-btn" data-price="100">
+                        🪙 100
+                    </button>
+                </div>
+
+                <div class="shop-item" data-item="extraLife">
+                    <div class="shop-item-info">
+                        <div class="shop-item-name">❤️ Extra Life</div>
+                        <div class="shop-item-desc">Start with 4 lives instead of 3</div>
+                        <div class="shop-item-owned" style="display: none;">✓ Owned</div>
+                    </div>
+                    <button class="shop-buy-btn" data-price="150">
+                        🪙 150
+                    </button>
+                </div>
+
+                <div class="shop-item" data-item="slowMotion">
+                    <div class="shop-item-info">
+                        <div class="shop-item-name">⏱️ Slow Motion</div>
+                        <div class="shop-item-desc">Balloons rise 30% slower</div>
+                        <div class="shop-item-owned" style="display: none;">✓ Owned</div>
+                    </div>
+                    <button class="shop-buy-btn" data-price="200">
+                        🪙 200
+                    </button>
+                </div>
+
+                <div class="shop-item" data-item="goldenBalloon">
+                    <div class="shop-item-info">
+                        <div class="shop-item-name">🌟 Golden Balloon</div>
+                        <div class="shop-item-desc">Rare balloons worth 50 points</div>
+                        <div class="shop-item-owned" style="display: none;">✓ Owned</div>
+                    </div>
+                    <button class="shop-buy-btn" data-price="250">
+                        🪙 250
+                    </button>
+                </div>
+
+                <div class="shop-item" data-item="magneticPower">
+                    <div class="shop-item-info">
+                        <div class="shop-item-name">🧲 Magnetic Power</div>
+                        <div class="shop-item-desc">Larger click radius for balloons</div>
+                        <div class="shop-item-owned" style="display: none;">✓ Owned</div>
+                    </div>
+                    <button class="shop-buy-btn" data-price="180">
+                        🪙 180
+                    </button>
+                </div>
+            </div>
+
+            <button class="close-btn" id="closeShop">Close</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>
